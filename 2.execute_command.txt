@@ -1,0 +1,10 @@
+# Langkah 1: Ekstraksi Video ke CSV
+python extract_to_csv.py
+
+# Langkah 2: Training Model (Menghasilkan file .pkl)
+python train_model.py
+
+# Langkah 3: Menjalankan Aplikasi Utama (Inference)
+# Pastikan kamu sudah punya file app.py yang memanggil sekiro_classifier.pkl
+python app.py
+

@@ -1,0 +1,8 @@
+# 1. Buat virtual environment
+python -m venv venv
+
+# 2. Aktifkan venv (Windows)
+venv\Scripts\activate
+
+# 3. Install library yang dibutuhkan
+pip install mediapipe opencv-python pandas scikit-learn pydirectinput

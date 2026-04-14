@@ -1,0 +1,7 @@
+opencv-python
+mediapipe
+numpy
+pynput
+PySide6
+pyinstaller
+nuitka
