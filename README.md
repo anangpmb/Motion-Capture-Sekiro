@@ -18,11 +18,11 @@ Execute this for the first time
 
 ### 3. Install library
 
-pip install mediapipe opencv-python pandas scikit-learn pydirectinput
+`pip install mediapipe opencv-python pandas scikit-learn pydirectinput`
 
 ## Store your sample video
 
-Before use the mapping, you need to provide sample videos to train the model that will decide the action. You can store the sample videos on root_dir/data/videos/<pose_name>
+Before use the mapping, you need to provide sample videos to train the model that will decide the action. You can store the sample videos on root_dir/data/videos/<pose_name>/<videos.mp4>
 
 Currently We had decide the name as below. You will need to adjust name below if you want to create new directory / pose
 
