@@ -1,97 +1,74 @@
-# MotionMap: Transforming Body Movements into Keyboard Actions
+### Information
 
-Transform real-time body movements — including walking, squatting, hand swinging, and head tilting — into keyboard inputs, enabling a more interactive and intuitive way to control apps and games.
+Inspired by [hoangv97/MotionMap](https://github.com/hoangv97/MotionMap)
 
-## Demo
+This motion mapping powered by mediapipe holistic to decide pose. Currently the mapping is only fit for Sekiro game. If you need to use on another game you might need to adjust key_map on cv2_thread as an action pose.
 
-Control an RPG game (Legend of Zelda) (old version)
+## Getting Started
 
-[![Watch the video](https://img.youtube.com/vi/nMx1VlgjfBw/default.jpg)](https://youtu.be/nMx1VlgjfBw)
+Execute this for the first time
 
-Control a racing game (old version)
+### 1. Create virtual environment
 
-[![Watch the video](https://img.youtube.com/vi/gAEEKOdsAxs/default.jpg)](https://youtu.be/gAEEKOdsAxs)
+`python -m venv venv`
 
-## How to install
+### 2. Activate venv (Windows)
 
-Install python3
+`venv\Scripts\activate`
 
-Create an virtual environment (optional)
+### 3. Install library
 
-```sh
-python -m venv venv
-.\venv\Scripts\activate
+pip install mediapipe opencv-python pandas scikit-learn pydirectinput
+
+## Store your sample video
+
+Before use the mapping, you need to provide sample videos to train the model that will decide the action. You can store the sample videos on root_dir/data/videos/<pose_name>
+
+Currently We had decide the name as below. You will need to adjust name below if you want to create new directory / pose
+
+```
+ MOVEMENT_ACTIONS = {
+            "move_forward": 'w',
+            "move_backward": 's',
+            "move_left": 'a',
+            "move_right": 'd'
+        }
+
+ key_map = {
+            "deflect": 'k',
+            "crouch": 'q',
+            "attack": 'j',
+            "deflect": 'k',
+            "jump": 'space',
+            "dash": 'shift',
+            "grapple": 'f',
+            "prosthetic": 'o',
+            "use_item": 'r',
+            "interact": 'e',
+            "lock_on": 'v',
+            "pause": 'esc'
+        }
+
 ```
 
-Install packages
+## Command to Update Motion Capture
 
-```sh
-pip install -r requirements.txt
-```
+### Step 1: Extract Video to CSV
 
-## Run the application
+`python extract_to_csv.py`
 
-```sh
-python app.py
-```
+this will extract coordinate from your video (data/videos/<pose_name>) into `dataset.csv`
 
-## Build
+### Step 2: Training Model (Create file .pkl)
 
-### Windows
+`python train_model.py`
 
-```sh
-python -m nuitka --disable-console --product-name MotionMap app.py
-```
+this command will train the model with `dataset.csv`
 
-Run the build file in the root directory
+### Step 3: Running the main app (Inference)
 
-- Windows: `app.exe`
+#### Make sure you have file app.py yang that call sekiro_classifier.pkl
 
-## Supported body movements
+`python app.py`
 
-Movements are based on Mediapipe Pose model. The model detects 33 key points of the body, including eyes, ears, nose, shoulders, elbows, wrists, hips, knees, and ankles. From these key points, we can detect the movements by calculating the angles between the points, the distance between the points, and the position of the points.
-
-![Body](/src/assets/body.png)
-
-See details in file `src/movements.py`
-
-### Head
-
-Tilt head in left/right
-
-### Hands
-
-- Swing hands
-  - Left: swing hand from left to right
-  - Full swing: swing left hand from head to bottom
-- Raise both hands up
-- Hands crossed: Cross 2 hands in Wakanda style
-
-### Legs
-
-- Walking:
-  - Up: walking with 2 hands down
-  - Left: walking with only left hand up 90 degree
-  - Right: walking with only right hand up 90 degree
-  - Backwards: : walking with both hands up 90 degree
-- Squat
-- Left/right leg raised
-
-### Driving mode (in development)
-
-- Move 2 hands close to enable steering wheel, tilt left or right to control
-- Move 2 hands inside the green box to enable driving up control
-
-### FPS mode (in development)
-
-## Roadmap
-
-- [ ] Support more modes: driving, FPS games, controlling mouse
-- [ ] Support 2 players mode
-- [ ] Support more OS: Mac, Linux
-- [ ] Edit movements detection thresholds (advanced mode)
-- [ ] Fix the mirror camera issue
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+![1776172335463](images/README/1776172335463.png)
