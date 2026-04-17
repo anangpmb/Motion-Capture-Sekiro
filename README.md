@@ -18,7 +18,7 @@ Execute this for the first time
 
 ### 3. Install library
 
-`pip install mediapipe opencv-python pandas scikit-learn pydirectinput`
+`pip install mediapipe==0.10.14 opencv-python pandas scikit-learn pydirectinput PyQt5`
 
 ## Store your sample video
 
