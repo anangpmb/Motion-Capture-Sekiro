@@ -8,3 +8,5 @@ python train_model.py
 # Pastikan kamu sudah punya file app.py yang memanggil sekiro_classifier.pkl
 python app.py
 
+Optional : Membuat file launcher
+pyinstaller --noconfirm --onefile --console --uac-admin --name "SekiroLauncher" launcher.py
