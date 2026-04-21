@@ -133,9 +133,15 @@ class Cv2Thread(QThread):
             self.release_action_hold()
             
             mapping = {
-                "attack": 'j', "jump": 'space', "dash": 'shift', 
-                "prosthetic": 'o', "use_item": 'r', "lock_on_target": 'm',
-                "grappler" : "f", "interact" : "e", "pause" : "esc"
+                "attack": 'j', 
+                "jump": 'space',
+                "dash": 'shift', 
+                "prosthetic": 'o', 
+                "use_item": 'r', 
+                "lock_on_target": 'm',
+                "grappler" : "f", 
+                "interact" : "e", 
+                "pause" : "esc"
             }
 
             key = mapping.get(label)
