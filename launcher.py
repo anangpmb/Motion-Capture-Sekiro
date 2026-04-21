@@ -3,6 +3,7 @@ import sys
 import subprocess
 import ctypes
 import time
+import shutil
 
 def is_admin():
     try:
@@ -14,19 +15,33 @@ def setup_environment():
     try:
         # --- FIX PATH SYSTEM32 ---
         # Mengunci direktori ke lokasi asli file, bukan folder system32
-        base_path = os.path.dirname(os.path.abspath(sys.executable if getattr(sys, 'frozen', False) else __file__))
+        base_path = os.path.dirname(os.path.abspath(
+            sys.executable if getattr(sys, 'frozen', False) else __file__
+        ))
+
+        # Guard: kalau base_path mengandung "venv", naik ke parent
+        while 'venv' in base_path.split(os.sep):
+            base_path = os.path.dirname(base_path)
+
         os.chdir(base_path)
-        
-        print("========================================")
-        print("     SHINOBI MOCAP - INITIALIZER")
-        print("========================================")
         print(f"[*] Root Directory: {base_path}")
 
-        # 1. Setup Venv
         venv_dir = os.path.join(base_path, 'venv')
+
+        python_exec = shutil.which("python") or shutil.which("python3")
+
+        if not python_exec:
+            print("[ERROR] Python tidak ditemukan di PATH!")
+            sys.exit(1)
+
+        print(f"[*] Python ditemukan: {python_exec}")
+
+        # Buat venv pakai subprocess, bukan venv.create()
+        import subprocess
         if not os.path.exists(venv_dir):
-            print("[*] Membuat Virtual Environment... Mohon Tunggu.")
-            subprocess.run([sys.executable, "-m", "venv", "venv"], check=True)
+            subprocess.run([python_exec, "-m", "venv", venv_dir], check=True)
+            print("Virtual environment berhasil dibuat!")
+           
 
         python_venv = os.path.join(base_path, 'venv', 'Scripts', 'python.exe')
 
