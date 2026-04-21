@@ -5,4 +5,4 @@ python -m venv venv
 venv\Scripts\activate
 
 # 3. Install library yang dibutuhkan
-pip install mediapipe==0.10.14 opencv-python pandas scikit-learn pydirectinput PyQt5
+pip install mediapipe==0.10.14 opencv-python pandas scikit-learn pydirectinput PyQt5 pyinstaller

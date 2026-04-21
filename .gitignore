@@ -7,5 +7,3 @@ data/*
 data/
 data/videos/
 data/videos/*
-
-config.local.json

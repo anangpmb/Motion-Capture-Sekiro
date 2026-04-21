@@ -1,0 +1,141 @@
+{
+    "mp_config": {
+        "min_detection_confidence": 0.5,
+        "min_tracking_confidence": 0.5,
+        "model_complexity": 2,
+        "enable_segmentation": false
+    },
+    "body_config": {
+        "draw_angles": false
+    },
+    "events_config": {
+        "keyboard_enabled": true,
+        "command_key_mappings": {
+            "both_hands_up": {
+                "key": ""
+            },
+            "cross_hands": {
+                "key": ""
+            },
+            "left_punch": {
+                "key": ""
+            },
+            "right_punch": {
+                "key": ""
+            },
+            "left_heavy_swing": {
+                "key": ""
+            },
+            "right_heavy_swing": {
+                "key": ""
+            },
+            "left_swing": {
+                "key": ""
+            },
+            "right_swing": {
+                "key": ""
+            },
+            "left_leg_up": {
+                "key": ""
+            },
+            "right_leg_up": {
+                "key": ""
+            },
+            "left_kick": {
+                "key": ""
+            },
+            "right_kick": {
+                "key": ""
+            },
+            "walk_both_hands_down": {
+                "modifier": "up"
+            },
+            "walk_both_hands_up": {
+                "modifier": "down"
+            },
+            "walk_left_hand_up": {
+                "modifier": "left"
+            },
+            "walk_right_hand_up": {
+                "modifier": "right"
+            },
+            "face_tilt_left": {
+                "key": ""
+            },
+            "face_tilt_right": {
+                "key": ""
+            }
+        },
+        "pressing_timer_interval": {
+            "click": 0.3,
+            "hold": 1.0,
+            "hold_fast": 0.2
+        }
+    },
+    "controls_list": [
+        {
+            "name": "Default",
+            "command_key_mappings": {
+                "both_hands_up": {
+                    "key": ""
+                },
+                "cross_hands": {
+                    "key": ""
+                },
+                "left_punch": {
+                    "key": ""
+                },
+                "right_punch": {
+                    "key": ""
+                },
+                "left_heavy_swing": {
+                    "key": ""
+                },
+                "right_heavy_swing": {
+                    "key": ""
+                },
+                "left_swing": {
+                    "key": ""
+                },
+                "right_swing": {
+                    "key": ""
+                },
+                "left_leg_up": {
+                    "key": ""
+                },
+                "right_leg_up": {
+                    "key": ""
+                },
+                "left_kick": {
+                    "key": ""
+                },
+                "right_kick": {
+                    "key": ""
+                },
+                "walk_both_hands_down": {
+                    "modifier": "up"
+                },
+                "walk_both_hands_up": {
+                    "modifier": "down"
+                },
+                "walk_left_hand_up": {
+                    "modifier": "left"
+                },
+                "walk_right_hand_up": {
+                    "modifier": "right"
+                },
+                "face_tilt_left": {
+                    "key": ""
+                },
+                "face_tilt_right": {
+                    "key": ""
+                }
+            },
+            "pressing_timer_interval": {
+                "click": 0.3,
+                "hold": 1.0,
+                "hold_fast": 0.2
+            }
+        }
+    ]
+}
