@@ -1,0 +1,22 @@
+{
+    "poses": [
+        {
+            "name": "run",
+            "key": "shift",
+            "type": "hold",
+            "folder": "data\\videos\\run"
+        },
+        {
+            "name": "attack",
+            "key": "j",
+            "type": "tap",
+            "folder": "data\\videos\\attack"
+        },
+        {
+            "name": "deflect",
+            "key": "k",
+            "type": "hold",
+            "folder": "data\\videos\\deflect"
+        }
+    ]
+}
