@@ -2,73 +2,100 @@
 
 Inspired by [hoangv97/MotionMap](https://github.com/hoangv97/MotionMap)
 
-This motion mapping powered by mediapipe holistic to decide pose. Currently the mapping is only fit for Sekiro game. If you need to use on another game you might need to adjust key_map on cv2_thread as an action pose.
+This motion mapping powered by MediaPipe Holistic to decide pose. Currently the mapping is only fit for Sekiro game. If you need to use on another game you might need to adjust the mapping via the dashboard.
 
 ## Getting Started
 
-Execute this for the first time
+### 1. Launch the Application
 
-### 1. Create virtual environment
+Run `run.bat` or execute `launcher.py` directly:
 
-`python -m venv venv`
+`python launcher.py`
 
-### 2. Activate venv (Windows)
+The launcher will automatically:
+- Request admin privileges (required for sending keystrokes to games)
+- Create a virtual environment
+- Install all dependencies (mediapipe, opencv-python, pandas, scikit-learn, pydirectinput, PyQt5, customtkinter)
+- Open the **SHINOBI MOCAP SYSTEM** dashboard
 
-`venv\Scripts\activate`
+## Dashboard Overview
 
-### 3. Install library
+The dashboard (`main_gui.py`) provides 4 main buttons:
 
-`pip install mediapipe==0.10.14 opencv-python pandas scikit-learn pydirectinput PyQt5`
+| Button | Function |
+|--------|----------|
+| MANAGE POSES & MAPPING | Add/remove pose-to-key mappings |
+| START MOCAP APP | Launch the camera + AI inference app |
+| EXPORT VIDEO TO CSV | Extract landmark data from sample videos |
+| TRAIN AI MODEL | Train the Random Forest classifier |
 
-## Store your sample video
+![1776172335463](images/README/1776172335463.png)
 
-Before use the mapping, you need to provide sample videos to train the model that will decide the action. You can store the sample videos on root_dir/data/videos/<pose_name>/<videos.mp4>
+## Step-by-Step Workflow
 
-Currently We had decide the name as below. You will need to adjust name below if you want to create new directory / pose
+### Step 1: Create Sample Videos
 
-```
- MOVEMENT_ACTIONS = {
-            "move_forward": 'w',
-            "move_backward": 's',
-            "move_left": 'a',
-            "move_right": 'd'
-        }
-
- key_map = {
-            "deflect": 'k',
-            "crouch": 'q',
-            "attack": 'j',
-            "deflect": 'k',
-            "jump": 'space',
-            "dash": 'shift',
-            "grapple": 'f',
-            "prosthetic": 'o',
-            "use_item": 'r',
-            "interact": 'e',
-            "lock_on": 'v',
-            "pause": 'esc'
-        }
+Record yourself performing each pose/action. Store the videos in:
 
 ```
+data/videos/<pose_name>/<video.mp4>
+```
 
-## Command to Update Motion Capture
+For example:
+```
+data/videos/attack/attack_1.mp4
+data/videos/attack/attack_2.mp4
+data/videos/deflect/deflect_1.mp4
+data/videos/run/run_1.mp4
+```
 
-### Step 1: Extract Video to CSV
+> You can also create the folder structure automatically by adding a new pose via **Manage Poses & Mapping** in the dashboard.
+
+### Step 2: Configure Mapping
+
+Click **MANAGE POSES & MAPPING** on the dashboard to open the Pose Manager.
+
+For each pose, configure:
+- **Name**: the pose label (e.g. `attack`, `deflect`, `run`)
+- **Key**: the keyboard key to press (e.g. `j`, `k`, `shift`)
+- **Type**: `tap` (press once) or `hold` (press and hold)
+
+The mapping is saved to `mapping.json`:
+
+```json
+{
+    "poses": [
+        { "name": "run",     "key": "shift", "type": "hold", "folder": "data/videos/run" },
+        { "name": "attack",  "key": "j",     "type": "tap",  "folder": "data/videos/attack" },
+        { "name": "deflect", "key": "k",     "type": "hold", "folder": "data/videos/deflect" }
+    ]
+}
+```
+
+### Step 3: Export Video to CSV
+
+Click **EXPORT VIDEO TO CSV** on the dashboard, or run manually:
 
 `python extract_to_csv.py`
 
-this will extract coordinate from your video (data/videos/<pose_name>) into `dataset.csv`
+This processes each video frame with MediaPipe Holistic and extracts 258 landmark features (pose + left hand + right hand) into `data/dataset.csv`.
 
-### Step 2: Training Model (Create file .pkl)
+### Step 4: Train the AI Model
+
+Click **TRAIN AI MODEL** on the dashboard, or run manually:
 
 `python train_model.py`
 
-this command will train the model with `dataset.csv`
+This trains a Random Forest classifier on `data/dataset.csv` and saves the model to `assets/models/sekiro_classifier.pkl`.
 
-### Step 3: Running the main app (Inference)
+### Step 5: Run the Motion Capture App
 
-#### Make sure you have file app.py yang that call sekiro_classifier.pkl
+Click **START MOCAP APP** on the dashboard, or run manually:
 
 `python app.py`
 
-![1776172335463](images/README/1776172335463.png)
+The app will:
+- Open your webcam
+- Detect body/hand poses in real time using MediaPipe Holistic
+- Predict the gesture using the trained model
+- Simulate the mapped keyboard input when confidence > 80%
